@@ -1,0 +1,5 @@
+{
+  "name": "Forex Lot Size Calculator",
+  "description": "A modern, responsive forex trading lot size calculator. It helps traders determine the appropriate position size based on their account balance, risk tolerance, and stop-loss level, with a sleek dark and light mode interface.",
+  "requestFramePermissions": []
+}
