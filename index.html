@@ -7,15 +7,55 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="manifest" href="/src/manifest.webmanifest">
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary-100: #430082;
+      --primary-200: #5d00b5;
+      --primary-300: #7800e8;
+      --accent-100: #ffce00;
+      --accent-200: #ffce00;
+      --accent-300: #ffce00;
+      --background-100: #fcfbfd;
+      --background-200: #efeaf5;
+      --background-300: #e3d9ec;
+      --text-100: #0d0019;
+      --text-200: #28004c;
+      --text-300: #42007f;
+    }
+
+    .dark {
+      --primary-100: #7800e8;
+      --primary-200: #9333ea;
+      --primary-300: #a855f7;
+      --accent-100: #ffce00;
+      --accent-200: #ffce00;
+      --accent-300: #ffce00;
+      --background-100: #0d0019;
+      --background-200: #1a0033;
+      --background-300: #28004c;
+      --text-100: #fcfbfd;
+      --text-200: #e3d9ec;
+      --text-300: #c8b9d7;
+    }
+  </style>
   <script>
     tailwind.config = {
-      darkMode: 'class', //
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            primary: {
-              '50': '#eff6ff', '100': '#dbeafe', '200': '#bfdbfe', '300': '#93c5fd', '400': '#60a5fa', '500': '#3b82f6', '600': '#2563eb', '700': '#1d4ed8', '800': '#1e40af', '900': '#1e3a8a', '950': '#172554'
-            }
+            'primary-100': 'var(--primary-100)',
+            'primary-200': 'var(--primary-200)',
+            'primary-300': 'var(--primary-300)',
+            'accent-100': 'var(--accent-100)',
+            'accent-200': 'var(--accent-200)',
+            'accent-300': 'var(--accent-300)',
+            'background-100': 'var(--background-100)',
+            'background-200': 'var(--background-200)',
+            'background-300': 'var(--background-300)',
+            'text-100': 'var(--text-100)',
+            'text-200': 'var(--text-200)',
+            'text-300': 'var(--text-300)',
           }
         }
       }

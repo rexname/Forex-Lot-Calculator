@@ -1,14 +1,14 @@
 <div [class.dark]="themeService.isDarkMode()">
-  <main class="min-h-screen w-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 flex flex-col items-center justify-center p-4 transition-colors duration-300 font-sans">
+  <main class="min-h-screen w-full bg-background-200 text-text-200 flex flex-col items-center justify-center p-4 transition-colors duration-300 font-sans">
     
-    <div class="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-2xl shadow-slate-300/30 dark:shadow-black/30 overflow-hidden">
+    <div class="w-full max-w-md bg-background-100 rounded-2xl shadow-2xl shadow-background-300/50 dark:shadow-black/30 overflow-hidden">
       <!-- Header -->
-      <div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+      <div class="p-6 border-b border-background-300 flex justify-between items-center">
         <div>
-          <h1 class="text-xl font-bold text-slate-900 dark:text-white">Lot Size Calculator</h1>
-          <p class="text-sm text-slate-500 dark:text-slate-400">Calculate your position size accurately.</p>
+          <h1 class="text-xl font-bold text-text-100">Lot Size Calculator</h1>
+          <p class="text-sm text-text-300">Calculate your position size accurately.</p>
         </div>
-        <button (click)="themeService.toggleTheme()" class="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-slate-800 transition-all duration-200">
+        <button (click)="themeService.toggleTheme()" class="p-2 rounded-full text-text-300 hover:bg-background-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-200 dark:focus:ring-offset-background-100 transition-all duration-200">
           <span class="sr-only">Toggle theme</span>
           @if (themeService.isDarkMode()) {
             <!-- Sun Icon -->
@@ -27,8 +27,8 @@
       <!-- Form Inputs -->
       <form (submit)="$event.preventDefault(); calculate()" class="p-6 space-y-6">
         <div>
-          <label for="pair" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Trading Pair</label>
-          <select id="pair" [value]="selectedPair()" (change)="onPairChange($event)" class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg shadow-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition">
+          <label for="pair" class="block text-sm font-medium text-text-200 mb-1">Trading Pair</label>
+          <select id="pair" [value]="selectedPair()" (change)="onPairChange($event)" class="w-full px-3 py-2 bg-background-200 border border-background-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary-200 focus:border-primary-200 transition">
             @for (symbol of pairSymbols(); track symbol) {
               <option [value]="symbol">{{ symbol }}</option>
             }
@@ -36,16 +36,16 @@
         </div>
         
         <div>
-          <label for="balance" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Account Balance (USD)</label>
-          <div class="flex items-center w-full bg-slate-50 dark:bg-slate-700 rounded-lg shadow-sm border border-slate-300 dark:border-slate-600 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all" [class.!border-red-500]="balanceError()" [class.dark:!border-red-500]="balanceError()">
-            <button type="button" (click)="adjustValue(balance, -100, 1)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-r border-slate-300 dark:border-slate-600">-</button>
+          <label for="balance" class="block text-sm font-medium text-text-200 mb-1">Account Balance (USD)</label>
+          <div class="flex items-center w-full bg-background-200 rounded-lg shadow-sm border border-background-300 focus-within:ring-2 focus-within:ring-primary-200 transition-all" [class.!border-red-500]="balanceError()" [class.dark:!border-red-500]="balanceError()">
+            <button type="button" (click)="adjustValue(balance, -100, 1)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-r border-background-300">-</button>
             <div class="relative flex-grow">
               <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <span class="text-slate-500 dark:text-slate-400 sm:text-sm">$</span>
+                <span class="text-text-300 sm:text-sm">$</span>
               </div>
               <input type="number" id="balance" [value]="balance()" (input)="updateSignalFromInput(balance, $event)" placeholder="10000" step="any" class="w-full text-center pl-7 pr-3 py-2 bg-transparent focus:outline-none">
             </div>
-             <button type="button" (click)="adjustValue(balance, 100, 1)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-l border-slate-300 dark:border-slate-600">+</button>
+             <button type="button" (click)="adjustValue(balance, 100, 1)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-l border-background-300">+</button>
           </div>
            @if (balanceError()) {
             <p class="mt-1 text-xs text-red-500 dark:text-red-400">{{ balanceError() }}</p>
@@ -53,32 +53,32 @@
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Risk Mode</label>
+          <label class="block text-sm font-medium text-text-200 mb-2">Risk Mode</label>
           <div class="grid grid-cols-2 gap-2">
-            <button type="button" (click)="onRiskModeChange('percent')" [class.bg-primary-600]="riskMode() === 'percent'" [class.text-white]="riskMode() === 'percent'" [class.bg-slate-100]="riskMode() !== 'percent'" [class.dark:bg-slate-700]="riskMode() !== 'percent'" class="w-full text-center p-2 rounded-md transition duration-200">Percentage</button>
-            <button type="button" (click)="onRiskModeChange('usd')" [class.bg-primary-600]="riskMode() === 'usd'" [class.text-white]="riskMode() === 'usd'" [class.bg-slate-100]="riskMode() !== 'usd'" [class.dark:bg-slate-700]="riskMode() !== 'usd'" class="w-full text-center p-2 rounded-md transition duration-200">Fixed USD</button>
+            <button type="button" (click)="onRiskModeChange('percent')" [class.bg-primary-200]="riskMode() === 'percent'" [class.text-white]="riskMode() === 'percent'" [class.bg-background-200]="riskMode() !== 'percent'" class="w-full text-center p-2 rounded-md transition duration-200">Percentage</button>
+            <button type="button" (click)="onRiskModeChange('usd')" [class.bg-primary-200]="riskMode() === 'usd'" [class.text-white]="riskMode() === 'usd'" [class.bg-background-200]="riskMode() !== 'usd'" class="w-full text-center p-2 rounded-md transition duration-200">Fixed USD</button>
           </div>
         </div>
 
         <div>
           @if (riskMode() === 'percent') {
-            <label for="risk-percent" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Risk (%)</label>
-            <div class="flex items-center w-full bg-slate-50 dark:bg-slate-700 rounded-lg shadow-sm border border-slate-300 dark:border-slate-600 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all" [class.!border-red-500]="riskValueError()" [class.dark:!border-red-500]="riskValueError()">
-              <button type="button" (click)="adjustValue(riskValue, -0.1, 0.01)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-r border-slate-300 dark:border-slate-600">-</button>
+            <label for="risk-percent" class="block text-sm font-medium text-text-200 mb-1">Risk (%)</label>
+            <div class="flex items-center w-full bg-background-200 rounded-lg shadow-sm border border-background-300 focus-within:ring-2 focus-within:ring-primary-200 transition-all" [class.!border-red-500]="riskValueError()" [class.dark:!border-red-500]="riskValueError()">
+              <button type="button" (click)="adjustValue(riskValue, -0.1, 0.01)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-r border-background-300">-</button>
               <input type="number" id="risk-percent" [value]="riskValue()" (input)="updateSignalFromInput(riskValue, $event)" placeholder="1" step="any" class="w-full text-center px-3 py-2 bg-transparent focus:outline-none">
-              <button type="button" (click)="adjustValue(riskValue, 0.1, 0.01)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-l border-slate-300 dark:border-slate-600">+</button>
+              <button type="button" (click)="adjustValue(riskValue, 0.1, 0.01)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-l border-background-300">+</button>
             </div>
           } @else {
-            <label for="risk-usd" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Risk (USD)</label>
-            <div class="flex items-center w-full bg-slate-50 dark:bg-slate-700 rounded-lg shadow-sm border border-slate-300 dark:border-slate-600 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all" [class.!border-red-500]="riskValueError()" [class.dark:!border-red-500]="riskValueError()">
-              <button type="button" (click)="adjustValue(riskValue, -10, 0.01)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-r border-slate-300 dark:border-slate-600">-</button>
+            <label for="risk-usd" class="block text-sm font-medium text-text-200 mb-1">Risk (USD)</label>
+            <div class="flex items-center w-full bg-background-200 rounded-lg shadow-sm border border-background-300 focus-within:ring-2 focus-within:ring-primary-200 transition-all" [class.!border-red-500]="riskValueError()" [class.dark:!border-red-500]="riskValueError()">
+              <button type="button" (click)="adjustValue(riskValue, -10, 0.01)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-r border-background-300">-</button>
               <div class="relative flex-grow">
                  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <span class="text-slate-500 dark:text-slate-400 sm:text-sm">$</span>
+                  <span class="text-text-300 sm:text-sm">$</span>
                 </div>
                 <input type="number" id="risk-usd" [value]="riskValue()" (input)="updateSignalFromInput(riskValue, $event)" placeholder="100" step="any" class="w-full text-center pl-7 pr-3 py-2 bg-transparent focus:outline-none">
               </div>
-              <button type="button" (click)="adjustValue(riskValue, 10, 0.01)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-l border-slate-300 dark:border-slate-600">+</button>
+              <button type="button" (click)="adjustValue(riskValue, 10, 0.01)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-l border-background-300">+</button>
             </div>
           }
           @if (riskValueError()) {
@@ -87,41 +87,41 @@
         </div>
         
         <div>
-          <label for="stop-loss" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Stop-Loss (pips)</label>
-          <div class="flex items-center w-full bg-slate-50 dark:bg-slate-700 rounded-lg shadow-sm border border-slate-300 dark:border-slate-600 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 transition-all" [class.!border-red-500]="stopLossPipsError()" [class.dark:!border-red-500]="stopLossPipsError()">
-            <button type="button" (click)="adjustValue(stopLossPips, -1, 1)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-r border-slate-300 dark:border-slate-600">-</button>
+          <label for="stop-loss" class="block text-sm font-medium text-text-200 mb-1">Stop-Loss (pips)</label>
+          <div class="flex items-center w-full bg-background-200 rounded-lg shadow-sm border border-background-300 focus-within:ring-2 focus-within:ring-primary-200 transition-all" [class.!border-red-500]="stopLossPipsError()" [class.dark:!border-red-500]="stopLossPipsError()">
+            <button type="button" (click)="adjustValue(stopLossPips, -1, 1)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-r border-background-300">-</button>
             <input type="number" id="stop-loss" [value]="stopLossPips()" (input)="updateSignalFromInput(stopLossPips, $event)" placeholder="20" step="any" class="w-full text-center px-3 py-2 bg-transparent focus:outline-none">
-            <button type="button" (click)="adjustValue(stopLossPips, 1, 1)" class="px-4 py-2 text-xl font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border-l border-slate-300 dark:border-slate-600">+</button>
+            <button type="button" (click)="adjustValue(stopLossPips, 1, 1)" class="px-4 py-2 text-xl font-semibold text-text-300 hover:bg-background-300 transition-colors duration-200 border-l border-background-300">+</button>
           </div>
            @if (stopLossPipsError()) {
             <p class="mt-1 text-xs text-red-500 dark:text-red-400">{{ stopLossPipsError() }}</p>
           }
         </div>
 
-        <button type="submit" [disabled]="!isFormValid()" class="w-full bg-primary-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:focus:ring-offset-slate-800 disabled:bg-slate-400 dark:disabled:bg-slate-600 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-100">
+        <button type="submit" [disabled]="!isFormValid()" class="w-full bg-primary-200 text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-200 dark:focus:ring-offset-background-100 disabled:bg-background-300 disabled:text-text-300 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105 active:scale-100">
           Calculate
         </button>
       </form>
 
       <!-- Results -->
       @if (calculationResult(); as result) {
-        <div class="bg-slate-100 dark:bg-slate-900/50 p-6 space-y-4">
-          <h2 class="text-lg font-semibold text-center text-slate-900 dark:text-white">Calculation Result</h2>
+        <div class="bg-background-200 p-6 space-y-4">
+          <h2 class="text-lg font-semibold text-center text-text-100">Calculation Result</h2>
           <div class="text-center">
-            <p class="text-sm text-slate-500 dark:text-slate-400">Suggested Lot Size</p>
-            <p class="text-4xl font-bold text-primary-600 dark:text-primary-400 tracking-tight">{{ result.lots | number:'1.2-4' }}</p>
+            <p class="text-sm text-text-300">Suggested Lot Size</p>
+            <p class="text-4xl font-bold text-primary-300 tracking-tight">{{ result.lots | number:'1.2-4' }}</p>
           </div>
           <div class="grid grid-cols-2 gap-4 text-center pt-2">
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">Micro Lots</p>
+              <p class="text-sm text-text-300">Micro Lots</p>
               <p class="text-xl font-semibold">{{ result.microLots }}</p>
             </div>
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">Risk Amount</p>
+              <p class="text-sm text-text-300">Risk Amount</p>
               <p class="text-xl font-semibold">{{ result.riskUsd | number:'1.2-2' }} USD</p>
             </div>
           </div>
-          <div class="pt-4 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400 space-y-1">
+          <div class="pt-4 border-t border-background-300 text-xs text-text-300 space-y-1">
              <div class="flex justify-between"><span>Pair:</span> <span class="font-mono">{{ selectedPair() }}</span></div>
              <div class="flex justify-between"><span>Contract Size:</span> <span class="font-mono">{{ currentPairInfo().contractSize | number }}</span></div>
              <div class="flex justify-between"><span>Pip Value / 1 Lot:</span> <span class="font-mono">{{ currentPairInfo().pipValuePerLot | number:'1.2-2' }} USD</span></div>
@@ -129,7 +129,7 @@
         </div>
       }
     </div>
-    <footer class="text-center mt-6 text-sm text-slate-500 dark:text-slate-400">
+    <footer class="text-center mt-6 text-sm text-text-300">
       <p>This calculator is for informational purposes only.</p>
     </footer>
   </main>
