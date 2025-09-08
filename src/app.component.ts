@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal, computed, WritableSignal, inject, OnInit, HostBinding } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, WritableSignal, inject, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { PAIR_DATA, PairInfo, CalculationHistory } from './models/pair.model';
 import { ThemeService } from './services/theme.service';
@@ -14,14 +14,9 @@ interface CalculationResult {
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, DecimalPipe],
-  standalone: true
 })
 export class AppComponent implements OnInit {
   themeService = inject(ThemeService);
-  
-  @HostBinding('class') get themeClass() {
-    return this.themeService.isDarkMode() ? 'dark' : '';
-  }
 
   // --- State Signals ---
   pairData = signal(PAIR_DATA);
@@ -132,10 +127,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // Lazy load calculation history
-    setTimeout(() => {
-      this.loadCalculationHistory();
-    }, 100);
+    this.loadCalculationHistory();
   }
 
   // --- History Management ---
@@ -155,23 +147,14 @@ export class AppComponent implements OnInit {
 
   private saveCalculationHistory(history: CalculationHistory[]): void {
     try {
-      // Debounce saving to localStorage to improve performance
-      if (this._saveTimeout) {
-        clearTimeout(this._saveTimeout);
-      }
-      this._saveTimeout = setTimeout(() => {
-        localStorage.setItem('calculationHistory', JSON.stringify(history));
-      }, 300);
+      localStorage.setItem('calculationHistory', JSON.stringify(history));
     } catch (error) {
       console.error('Failed to save calculation history:', error);
     }
   }
-  
-  private _saveTimeout: any;
 
   toggleHistoryDisplay(): void {
     this.showHistory.update(value => !value);
-    console.log('History display toggled:', this.showHistory());
   }
 
   clearHistory(): void {
@@ -191,36 +174,40 @@ export class AppComponent implements OnInit {
     const slPips = this.stopLossPips()!;
     const { pipValuePerLot } = this.currentPairInfo();
 
-    // Calculate risk in USD
-    const riskUsd = this.riskMode() === 'percent' ? 
-      balance * (riskValue / 100.0) : riskValue;
+    let riskUsd = 0;
+    if (this.riskMode() === 'percent') {
+      riskUsd = balance * (riskValue / 100.0);
+    } else {
+      riskUsd = riskValue;
+    }
 
-    // Early return for invalid values
     if (pipValuePerLot <= 0 || slPips <= 0) {
-        this.calculationResult.set({ lots: 0, microLots: 0, riskUsd });
+        this.calculationResult.set({ lots: 0, microLots: 0, riskUsd: riskUsd });
         return;
     }
 
-    // Calculate lot size
-    const pipRiskTotal = pipValuePerLot * slPips;
-    const lots = riskUsd / pipRiskTotal;
+    const lots = riskUsd / (pipValuePerLot * slPips);
     const roundedLots = Math.round(lots * 10000) / 10000; // Round to 4 decimal places
     const microLots = Math.floor(roundedLots * 100);
 
-    const result = { lots: roundedLots, microLots, riskUsd };
+    const result = {
+      lots: roundedLots,
+      microLots: microLots,
+      riskUsd: riskUsd
+    };
+    
     this.calculationResult.set(result);
     
-    // Save to history with performance optimization
-    const timestamp = Date.now();
+    // Save to history
     const historyEntry: CalculationHistory = {
-      id: timestamp.toString(),
-      timestamp,
+      id: Date.now().toString(),
+      timestamp: Date.now(),
       pair: this.selectedPair(),
-      balance,
+      balance: balance,
       riskMode: this.riskMode(),
-      riskValue,
+      riskValue: riskValue,
       stopLossPips: slPips,
-      result
+      result: result
     };
     
     const currentHistory = this.calculationHistory();

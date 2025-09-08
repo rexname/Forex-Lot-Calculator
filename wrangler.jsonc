@@ -2,17 +2,7 @@
     "name": "forex-calculator",
     "compatibility_date": "2025-09-08",
     "assets": {
-        "directory": "./dist",
-        "serve_single_page_app": true
+        "directory": "./dist"
     },
-    "routes": [
-        {
-            "pattern": "sitemap.xml",
-            "custom_domain": true
-        },
-        {
-            "pattern": "robots.txt",
-            "custom_domain": true
-        }
-    ]
+    "workers_dev": true
 }
