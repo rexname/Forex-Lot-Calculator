@@ -3,7 +3,7 @@
     "compatibility_date": "2025-09-08",
     "assets": {
         "directory": "./dist",
-        "binding": "ASSETS"
+        "serve_single_page_app": true
     },
     "routes": [
         {
