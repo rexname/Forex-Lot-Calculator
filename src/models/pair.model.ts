@@ -5,6 +5,21 @@ export interface PairInfo {
   defaultSpread: number;
 }
 
+export interface CalculationHistory {
+  id: string;
+  timestamp: number;
+  pair: string;
+  balance: number;
+  riskMode: 'percent' | 'usd';
+  riskValue: number;
+  stopLossPips: number;
+  result: {
+    lots: number;
+    microLots: number;
+    riskUsd: number;
+  };
+}
+
 export const PAIR_DATA: { [key: string]: PairInfo } = {
   "XAUUSD": { contractSize: 100, pipValuePerLot: 10.0, defaultSpread: 18 },
   "EURUSD": { contractSize: 100_000, pipValuePerLot: 10.0, defaultSpread: 1 },

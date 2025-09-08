@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, signal, computed, WritableSignal, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, computed, WritableSignal, inject, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { PAIR_DATA, PairInfo } from './models/pair.model';
+import { PAIR_DATA, PairInfo, CalculationHistory } from './models/pair.model';
 import { ThemeService } from './services/theme.service';
 
 interface CalculationResult {
@@ -15,7 +15,7 @@ interface CalculationResult {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, DecimalPipe],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   themeService = inject(ThemeService);
 
   // --- State Signals ---
@@ -29,6 +29,8 @@ export class AppComponent {
   stopLossPips = signal<number | null>(20);
   
   calculationResult = signal<CalculationResult | null>(null);
+  calculationHistory = signal<CalculationHistory[]>([]);
+  showHistory = signal<boolean>(false);
 
   // --- Validation Error Signals ---
   balanceError = signal<string>('');
@@ -124,6 +126,45 @@ export class AppComponent {
   }
 
 
+  ngOnInit(): void {
+    this.loadCalculationHistory();
+    console.log('Loaded calculation history:', this.calculationHistory());
+  }
+
+  // --- History Management ---
+  private loadCalculationHistory(): void {
+    try {
+      const historyJson = localStorage.getItem('calculationHistory');
+      if (historyJson) {
+        const history = JSON.parse(historyJson) as CalculationHistory[];
+        this.calculationHistory.set(history);
+      }
+    } catch (error) {
+      console.error('Failed to load calculation history:', error);
+      // If there's an error, reset the history
+      this.calculationHistory.set([]);
+    }
+  }
+
+  private saveCalculationHistory(history: CalculationHistory[]): void {
+    try {
+      localStorage.setItem('calculationHistory', JSON.stringify(history));
+      console.log('Saved calculation history:', history);
+    } catch (error) {
+      console.error('Failed to save calculation history:', error);
+    }
+  }
+
+  toggleHistoryDisplay(): void {
+    this.showHistory.update(value => !value);
+    console.log('History display toggled:', this.showHistory());
+  }
+
+  clearHistory(): void {
+    this.calculationHistory.set([]);
+    this.saveCalculationHistory([]);
+  }
+
   // --- Core Logic ---
   calculate(): void {
     this.validate();
@@ -152,10 +193,29 @@ export class AppComponent {
     const roundedLots = Math.round(lots * 10000) / 10000; // Round to 4 decimal places
     const microLots = Math.floor(roundedLots * 100);
 
-    this.calculationResult.set({
+    const result = {
       lots: roundedLots,
       microLots: microLots,
       riskUsd: riskUsd
-    });
+    };
+    
+    this.calculationResult.set(result);
+    
+    // Save to history
+    const historyEntry: CalculationHistory = {
+      id: Date.now().toString(),
+      timestamp: Date.now(),
+      pair: this.selectedPair(),
+      balance: balance,
+      riskMode: this.riskMode(),
+      riskValue: riskValue,
+      stopLossPips: slPips,
+      result: result
+    };
+    
+    const currentHistory = this.calculationHistory();
+    const updatedHistory = [historyEntry, ...currentHistory].slice(0, 10); // Keep only the last 10 entries
+    this.calculationHistory.set(updatedHistory);
+    this.saveCalculationHistory(updatedHistory);
   }
 }

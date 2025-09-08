@@ -71,6 +71,32 @@
     input[type=number] {
       -moz-appearance: textfield;
     }
+    
+    /* Custom scrollbar styles */
+    .scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    
+    .scrollbar::-webkit-scrollbar-track {
+      background: var(--background-200);
+      border-radius: 8px;
+    }
+    
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: var(--primary-200);
+      border-radius: 8px;
+    }
+    
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-300);
+    }
+    
+    /* Firefox scrollbar */
+    .scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-200) var(--background-200);
+    }
   </style>
 <script type="importmap">
 {
