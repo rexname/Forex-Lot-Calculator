@@ -104,7 +104,18 @@ self.addEventListener('fetch', (event) => {
               .then(cache => cache.put(event.request, responseToCache));
             
             return response;
+          })
+          .catch(error => {
+            console.error('Fetch failed:', error);
+            // You could return a custom offline page here
           });
       })
   );
+});
+
+// Handle offline functionality
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

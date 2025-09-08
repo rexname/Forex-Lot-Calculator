@@ -1,65 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-g">
-  <title>Forex Lot Size Calculator</title>
+  <meta charset="UTF-8">
+  <title>Forex Lot Size Calculator | Hitung Ukuran Lot Trading dengan Mudah</title>
+  <meta name="description" content="Kalkulator ukuran lot forex yang membantu trader menghitung posisi trading dengan tepat berdasarkan manajemen risiko. Hitung lot, profit, dan risiko dengan cepat.">
+  <meta name="keywords" content="forex calculator, lot size calculator, forex trading, risk management, trading calculator, kalkulator forex, ukuran lot">
+  <meta name="author" content="Forex Calculator">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Forex Lot Size Calculator | Hitung Ukuran Lot Trading dengan Mudah">
+  <meta property="og:description" content="Kalkulator ukuran lot forex yang membantu trader menghitung posisi trading dengan tepat berdasarkan manajemen risiko.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fx.rexname.icu">
+  <meta property="og:image" content="/assets/forex-calculator-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Forex Lot Size Calculator | Hitung Ukuran Lot Trading dengan Mudah">
+  <meta name="twitter:description" content="Kalkulator ukuran lot forex yang membantu trader menghitung posisi trading dengan tepat berdasarkan manajemen risiko.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5d00b5">
+  <link rel="canonical" href="https://fx.rexname.icu">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="manifest" href="/src/manifest.webmanifest">
+  <link rel="preconnect" href="https://next.esm.sh">
+  <link rel="preconnect" href="https://aistudiocdn.com">
+  <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --primary-100: #430082;
-      --primary-200: #5d00b5;
-      --primary-300: #7800e8;
-      --accent-100: #ffce00;
-      --accent-200: #ffce00;
-      --accent-300: #ffce00;
-      --background-100: #fcfbfd;
-      --background-200: #efeaf5;
-      --background-300: #e3d9ec;
-      --text-100: #0d0019;
-      --text-200: #28004c;
-      --text-300: #42007f;
-    }
-
-    .dark {
-      --primary-100: #7800e8;
-      --primary-200: #9333ea;
-      --primary-300: #a855f7;
-      --accent-100: #ffce00;
-      --accent-200: #ffce00;
-      --accent-300: #ffce00;
-      --background-100: #0d0019;
-      --background-200: #1a0033;
-      --background-300: #28004c;
-      --text-100: #fcfbfd;
-      --text-200: #e3d9ec;
-      --text-300: #c8b9d7;
-    }
+    :root{--primary-100:#430082;--primary-200:#5d00b5;--primary-300:#7800e8;--accent-100:#ffce00;--accent-200:#ffce00;--accent-300:#ffce00;--background-100:#fcfbfd;--background-200:#efeaf5;--background-300:#e3d9ec;--text-100:#0d0019;--text-200:#28004c;--text-300:#42007f}
+    .dark{--primary-100:#7800e8;--primary-200:#9333ea;--primary-300:#a855f7;--accent-100:#ffce00;--accent-200:#ffce00;--accent-300:#ffce00;--background-100:#0d0019;--background-200:#1a0033;--background-300:#28004c;--text-100:#fcfbfd;--text-200:#e3d9ec;--text-300:#c8b9d7}
   </style>
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'primary-100': 'var(--primary-100)',
-            'primary-200': 'var(--primary-200)',
-            'primary-300': 'var(--primary-300)',
-            'accent-100': 'var(--accent-100)',
-            'accent-200': 'var(--accent-200)',
-            'accent-300': 'var(--accent-300)',
-            'background-100': 'var(--background-100)',
-            'background-200': 'var(--background-200)',
-            'background-300': 'var(--background-300)',
-            'text-100': 'var(--text-100)',
-            'text-200': 'var(--text-200)',
-            'text-300': 'var(--text-300)',
-          }
-        }
-      }
-    }
+    tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:{100:'var(--primary-100)',200:'var(--primary-200)',300:'var(--primary-300)'},accent:{100:'var(--accent-100)',200:'var(--accent-200)',300:'var(--accent-300)'},background:{100:'var(--background-100)',200:'var(--background-200)',300:'var(--background-300)'},text:{100:'var(--text-100)',200:'var(--text-200)',300:'var(--text-300)'}}}}};  
   </script>
   <style>
     /* Hide number input arrows */
@@ -73,30 +43,11 @@
     }
     
     /* Custom scrollbar styles */
-    .scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    
-    .scrollbar::-webkit-scrollbar-track {
-      background: var(--background-200);
-      border-radius: 8px;
-    }
-    
-    .scrollbar::-webkit-scrollbar-thumb {
-      background: var(--primary-200);
-      border-radius: 8px;
-    }
-    
-    .scrollbar::-webkit-scrollbar-thumb:hover {
-      background: var(--primary-300);
-    }
-    
-    /* Firefox scrollbar */
-    .scrollbar {
-      scrollbar-width: thin;
-      scrollbar-color: var(--primary-200) var(--background-200);
-    }
+    .scrollbar::-webkit-scrollbar{width:6px;height:6px}
+    .scrollbar::-webkit-scrollbar-track{background:var(--background-200);border-radius:8px}
+    .scrollbar::-webkit-scrollbar-thumb{background:var(--primary-200);border-radius:8px}
+    .scrollbar::-webkit-scrollbar-thumb:hover{background:var(--primary-300)}
+    .scrollbar{scrollbar-width:thin;scrollbar-color:var(--primary-200) var(--background-200)}
   </style>
 <script type="importmap">
 {
@@ -114,6 +65,21 @@
   }
 }
 </script>
+<link rel="modulepreload" href="https://next.esm.sh/@angular/core@^20.1.6-0?external=rxjs">
+<link rel="modulepreload" href="https://next.esm.sh/@angular/platform-browser@^20.1.6-0?external=rxjs">
+<link rel="modulepreload" href="https://next.esm.sh/@angular/compiler@^20.1.6-0?external=rxjs">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        } catch (error) {
+          console.error('ServiceWorker registration failed: ', error);
+        }
+      });
+    }
+  </script>
 </head>
 <body>
   <app-root></app-root>

@@ -1,4 +1,4 @@
-<div [class.dark]="themeService.isDarkMode()">
+<div>
   <main class="min-h-screen w-full bg-background-200 text-text-200 flex flex-col items-center justify-center p-4 transition-colors duration-300 font-sans overflow-hidden">
     
     <div class="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-3 gap-4 h-full min-h-screen">
@@ -14,12 +14,12 @@
             <span class="sr-only">Toggle theme</span>
             @if (themeService.isDarkMode()) {
               <!-- Sun Icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             } @else {
               <!-- Moon Icon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="24" height="24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
             }
@@ -139,7 +139,7 @@
         <div class="bg-background-200 p-4 flex justify-center border-t border-background-300 sm:hidden">
           <button type="button" (click)="toggleHistoryDisplay()" class="text-sm text-text-300 hover:text-primary-200 flex items-center gap-1 transition-colors">
             <span>{{ showHistory() ? 'Hide History' : 'Show History' }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" width="16" height="16">
               @if (showHistory()) {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
               } @else {
@@ -162,7 +162,7 @@
             <p class="text-sm text-text-300 text-center py-4">No calculation history yet.</p>
           } @else {
             @for (entry of calculationHistory(); track entry.id) {
-              <div class="bg-background-200 rounded-lg p-3 text-xs space-y-2 shadow-sm">
+              <div class="bg-background-200 rounded-lg p-3 text-xs space-y-2 shadow-sm" loading="lazy">
                 <div class="flex justify-between text-text-100">
                   <span class="font-semibold">{{ entry.pair }}</span>
                   <span class="text-text-300">{{ entry.timestamp | date:'short' }}</span>
@@ -197,13 +197,13 @@
           </div>
         </div>
         
-        <!-- History Content (always visible on desktop) -->
+        <!-- History Content (always visible on desktop) with lazy loading -->
         <div class="p-4 space-y-3 h-[calc(100vh-8rem)] overflow-y-auto scrollbar">
           @if (calculationHistory().length === 0) {
             <p class="text-sm text-text-300 text-center py-4">No calculation history yet.</p>
           } @else {
             @for (entry of calculationHistory(); track entry.id) {
-              <div class="bg-background-200 rounded-lg p-3 text-xs space-y-2 shadow-sm">
+              <div class="bg-background-200 rounded-lg p-3 text-xs space-y-2 shadow-sm" loading="lazy">
                 <div class="flex justify-between text-text-100">
                   <span class="font-semibold">{{ entry.pair }}</span>
                   <span class="text-text-300">{{ entry.timestamp | date:'short' }}</span>
