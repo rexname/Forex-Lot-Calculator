@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fx.rexname.icusitemap.xml
+Sitemap: https://fx.rexname.icu/sitemap.xml
