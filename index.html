@@ -81,6 +81,22 @@
     }
   </script>
 </head>
+  <script>
+  (function(d,t) {
+    var BASE_URL="https://chat.rediva.my.id";
+    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=BASE_URL+"/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g,s);
+    g.onload=function(){
+      window.chatwootSDK.run({
+        websiteToken: 'JWDj1EP4UkMzUjhAfre6Uzvh',
+        baseUrl: BASE_URL
+      })
+    }
+  })(document,"script");
+</script>
+
 <body>
   <app-root></app-root>
 </body>
